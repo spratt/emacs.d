@@ -22,10 +22,10 @@
 (setq scroll-step 1)
 (setq search-exit-char 13)
 (put 'eval-expression 'disabled nil)
-(setq auto-mode-alist (append '(("\\.php$" . c-mode)
-                                ("\\.lsp$" . lisp-mode)
-                                ("\\.txt$" . text-mode))
-                              auto-mode-alist))
+;; (setq auto-mode-alist (append '(("\\.php$" . c-mode)
+;;                                 ("\\.lsp$" . lisp-mode)
+;;                                 ("\\.txt$" . text-mode))
+;;                               auto-mode-alist))
 (setq completion-ignored-extensions
       (append '(".sparcf" ".sbin")
 	      completion-ignored-extensions))
@@ -37,6 +37,7 @@
 (transient-mark-mode t)
 (setq fill-column 78)
 (desktop-save-mode 1)
+(setq mouse-wheel-scroll-amount '(0.01))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Mac-specific settings
@@ -93,74 +94,19 @@
 ;;; Make newer Emacs more like the earlier 19 and 20
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(if (or (string-equal "21" (substring (emacs-version) 10 12))
-	(string-equal "22" (substring (emacs-version) 10 12))
-	(string-equal "23" (substring (emacs-version) 10 12))
-	(string-equal "24" (substring (emacs-version) 10 12)))
-    (progn
-      (if (not (equal window-system 'nil))
-	  (progn
-	    ;; If we're using a window system,
-	    ;; Turn off the tool bar (icons)
-	    (tool-bar-mode 0)
-	    ;; Turn off the scroll bars
-	    (scroll-bar-mode -1)))
-      ;; Apparently this is like emacs 19
-      (blink-cursor-mode 0)
-      ;; Turn on image viewing
-      (auto-image-file-mode t)
-      ;; Turn on menu bar (this bar has text)
-      (menu-bar-mode 0)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Set up standard colors
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;; X Windows
-(cond ((equal window-system 'x)
-       (setq default-frame-alist
-	     (append default-frame-alist
-		     '((foreground-color . "Green")
-		       (background-color . "Black")
-		       (cursor-color . "Red"))))
-       
-       (set-face-background 'highlight "Orange")
-       (set-face-foreground 'highlight "Black")
-
-       (set-face-background 'region "Orange")
-       (set-face-foreground 'region "Black")
-
-       (setq mouse-wheel-scroll-amount '(0.01)))
-
-;;; Mac
-      ((or
-	(equal window-system 'mac)
-	(equal window-system 'ns))
-       (setq default-frame-alist
-	     (append default-frame-alist
-		     '((foreground-color . "Green")
-		       (background-color . "Black")
-		       (cursor-color . "Red"))))
-       
-       (set-face-background 'highlight "Orange")
-       (set-face-foreground 'highlight "Black")
-
-       (set-face-background 'region "Orange")
-       (set-face-foreground 'region "Black")
-
-       (setq mac-option-modifier 'meta)
-       (setq mac-command-modifier nil)
-       (setq mouse-wheel-scroll-amount '(0.01)))
-      ((equal window-system nil)
-       
-       (set-face-background 'minibuffer-prompt "Black")
-       (set-face-foreground 'minibuffer-prompt "Light Blue")
-
-       (set-face-background 'highlight "Orange")
-       (set-face-foreground 'highlight "Black")
-
-       (set-face-background 'region "Orange")
-       (set-face-foreground 'region "Black")))
+(when (>= emacs-major-version 21)
+  (when (not (equal window-system 'nil))
+    ;; If we're using a window system,
+    ;; Turn off the tool bar (icons)
+    (tool-bar-mode 0)
+    ;; Turn off the scroll bars
+    (scroll-bar-mode -1))
+  ;; Apparently this is like emacs 19
+  (blink-cursor-mode 0)
+  ;; Turn on image viewing
+  (auto-image-file-mode t)
+  ;; Turn on menu bar (this bar has text)
+  (menu-bar-mode 0))
 
 (defun set-window-width (n)
   "Set the selected window's width."
@@ -188,3 +134,9 @@
 (setq split-height-threshold nil)
 (setq split-width-threshold 0)
 (put 'downcase-region 'disabled nil)
+
+
+(when (>= emacs-major-version 24)
+  (load "~/.emacs.d/init-packages")
+  (load-theme 'tango-dark)
+  (set-background-color "black"))
