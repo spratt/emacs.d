@@ -1,14 +1,4 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;;        Note that there must be a symlink to let emacs find this         
-;;;        file.  Either from:                                              
-;;;                                                                         
-;;;         - .emacs   -> emacs.d/init.el                                   
-;;;         - .emacs.d -> emacs.d/                                          
-;;;                                                                         
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Standard Emacs setup:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -70,7 +60,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar autosave-dir
-  "~/emacs.d/autosave/")
+  "~/.emacs.d/autosave/")
 
 (make-directory autosave-dir t)
 
@@ -84,7 +74,7 @@
     (expand-file-name
      (concat "#%" (buffer-name) "#")))))
 
-(defvar backup-dir "~/emacs.d/backup/")
+(defvar backup-dir "~/.emacs.d/backup/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 ;; Automagically delete excessive backups
