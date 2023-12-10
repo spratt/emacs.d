@@ -11,9 +11,6 @@
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-
-(add-to-list 'package-archives
              '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/")
@@ -22,7 +19,6 @@
 ; list the packages you want
 (setq package-list
       '(php-mode))
-
 
 ; activate all the packages
 (package-initialize)

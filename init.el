@@ -12,10 +12,6 @@
 (setq scroll-step 1)
 (setq search-exit-char 13)
 (put 'eval-expression 'disabled nil)
-;; (setq auto-mode-alist (append '(("\\.php$" . c-mode)
-;;                                 ("\\.lsp$" . lisp-mode)
-;;                                 ("\\.txt$" . text-mode))
-;;                               auto-mode-alist))
 (setq completion-ignored-extensions
       (append '(".sparcf" ".sbin")
 	      completion-ignored-extensions))
@@ -38,22 +34,6 @@
     ;; Fix the bug where emacs can't find git
     (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:" (getenv "PATH")))
     (push "/opt/local/bin" exec-path)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; When opening a cocoa window, as opposed to terminal
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(when (or
-	(equal window-system 'mac)
-	(equal window-system 'ns))
-    (progn
-      ;; When quitting emacs, save the list of open files so they can be
-      ;; opened again next startup
-      ;; Resize frame to ~1280x800
-      (set-frame-height (selected-frame) 50)
-      (set-frame-width (selected-frame) 171)
-      ;; Split window in half for editing two files side-by-side
-      (split-window-horizontally)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Set the backup and autosave directories to a central location
@@ -111,10 +91,20 @@
 (global-set-key (kbd "C-*") 'window-term-width)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Personal Settings
+;;; Packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq diary-file "~/Dropbox/Writing/diary.txt")
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+(package-initialize)
+
+(use-package vterm
+             :ensure t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Personal Settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; I hate seeing when people join or leave IRC
 (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
@@ -125,8 +115,19 @@
 (setq split-width-threshold 0)
 (put 'downcase-region 'disabled nil)
 
-
 (when (>= emacs-major-version 24)
-  (load "~/.emacs.d/init-packages")
   (load-theme 'tango-dark)
   (set-background-color "black"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(php-mode))
+ '(warning-suppress-types '((comp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
